@@ -1,15 +1,15 @@
 # Cortex-Guard: Continuous Behavioral Monitoring for Zero-Trust Architectures
 
-> **Research prototype exploring how Palo Alto Networks could extend Cortex XDR with continuous endpoint telemetry analysis — using production-quality engineering patterns.**
+> **Research prototype exploring how enterprise security platforms can extend endpoint monitoring with continuous telemetry analysis — using production-quality engineering patterns.**
 
 **Problem:** Today's security stack verifies identity at login but assumes trust indefinitely thereafter — leaving active sessions vulnerable to hijacking, credential theft, and insider threats. The gap between initial MFA and continuous monitoring can allow an attacker to dwell undetected for **hours to days**.
 
 **Solution:** A modular framework for continuous behavioral monitoring that evaluates real-time telemetry streams (beginning with keystroke dynamics) and provides a live risk score — reducing the potential dwell time of a compromised session from hours to **seconds**.
 
-**Alignment with PANW Products:**
-- 🟠 **Cortex XDR** — Endpoint behavioral telemetry ingestion and anomaly detection
-- 🔵 **Prisma Access ZTNA** — Continuous "Never Trust, Always Verify" session scoring
-- 🟢 **Strata NGFW** — Session anomaly alerts can trigger firewall policy changes and dynamic access control
+**Integration with Security Architectures:**
+- 🛡️ **Endpoint Detection (EDR)** — Ingests endpoint behavioral telemetry and detects active session anomalies.
+- 🌐 **Zero-Trust Network Access (ZTNA)** — Continuous "Never Trust, Always Verify" session scoring fed directly into access policies.
+- 🧱 **Next-Generation Firewalls (NGFW)** — Session anomaly alerts trigger dynamic firewall policy changes to prevent lateral movement.
 
 ---
 
@@ -40,7 +40,7 @@ graph TD
 
 ### Biometric Feature Extraction — O(n) Streaming Algorithm
 
-The feature extraction pipeline processes keystroke events in a single linear pass O(n), designed for low-latency edge-agent compatibility (Cortex XDR lightweight agent model):
+The feature extraction pipeline processes keystroke events in a single linear pass O(n), designed for low-latency edge-agent compatibility (lightweight endpoint agent model):
 
 - **Dwell Time (DT)**: Duration a key is held down (`KeyUp − KeyDown`). Reflects physical neuromuscular response.
 - **Flight Time (FT)**: Interval between consecutive keystrokes (`KeyDown_current − KeyUp_previous`). Captures cognitive typing rhythm.
@@ -62,7 +62,7 @@ Evaluated via Stratified 4-Fold Cross-Validation on genuine enrollment samples a
 
 ### Design Decision: SVM Selected as Primary Strategy
 
-Although **Random Forest** matches SVM in validation accuracy, it carries an **18× latency overhead** (~219μs vs. ~13μs). In lightweight endpoint agent environments mirroring **Cortex XDR's** compute-constrained model, minimizing CPU cycles per inference is critical. **SVM (RBF)** achieves the best EER (7.5%) with microsecond-level latency — the right trade-off for always-on behavioral monitoring.
+Although **Random Forest** matches SVM in validation accuracy, it carries an **18× latency overhead** (~219μs vs. ~13μs). In lightweight endpoint agent environments mirroring resource-constrained agent models, minimizing CPU cycles per inference is critical. **SVM (RBF)** achieves the best EER (7.5%) with microsecond-level latency — the right trade-off for always-on behavioral monitoring.
 
 The Strategy Pattern in the codebase allows the model to be hot-swapped at runtime without restarting the service — intentional extensibility for research iteration.
 
@@ -70,7 +70,7 @@ The Strategy Pattern in the codebase allows the model to be hot-swapped at runti
 
 ## ⚙️ Operational Security Profiles
 
-Operators configure the Zero-Trust policy threshold via three pre-built risk profiles, simulating the kind of adaptive access control policies in **Prisma Access**:
+Operators configure the Zero-Trust policy threshold via three pre-built risk profiles, simulating adaptive access control policies:
 
 | Profile | Target | Use Case |
 | :--- | :--- | :--- |
@@ -80,18 +80,15 @@ Operators configure the Zero-Trust policy threshold via three pre-built risk pro
 
 ---
 
-## 🔗 Integration with Palo Alto Networks Products
+## 🔗 Production Integration Path
 
-This prototype is architected to align with PANW's product ecosystem:
+This prototype is architected to integrate into an enterprise-grade security ecosystem:
 
-| PANW Product | Integration Point | How Cortex-Guard Maps |
-| :--- | :--- | :--- |
-| **Cortex XDR** | Endpoint telemetry agent | Feature extraction + continuous session risk scoring |
-| **Prisma Access ZTNA** | Identity-aware proxy | Per-session trust score fed into access decisions |
-| **Strata NGFW** | Policy enforcement | Anomaly alerts trigger dynamic firewall policy changes, blocking lateral movement |
-| **Cortex Data Lake** | Telemetry storage | Session logs → structured schema ready for CDL ingestion |
-
-In a production deployment, the session score API (`POST /session/score`) output would be consumed by a Cortex XSOAR playbook to automatically trigger remediation — step-up MFA, session termination, or firewall quarantine.
+1. **Telemetry Capture:** Ingests live keystroke telemetry streams through a lightweight endpoint agent.
+2. **Dynamic Risk Engine:** Evaluates inputs using the selected SVM model and computes real-time session risk scores.
+3. **Access Enforcement:** Feeds risk scores into the corporate ZTNA (Zero-Trust Network Access) gateway to adjust user access dynamically.
+4. **Automated Incident Response:** If scores cross the anomaly threshold, events trigger a SOAR (Security Orchestration, Automation, and Response) playbook to isolate the host, log off the session, or challenge the user with step-up MFA.
+5. **Data Lake Storage:** Forwards telemetry logs to centralized security information and event management (SIEM) data lakes for audit compliance.
 
 ---
 

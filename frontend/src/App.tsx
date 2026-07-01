@@ -5,7 +5,7 @@ import { EnrollmentPanel } from './components/EnrollmentPanel';
 import { VerificationPanel } from './components/VerificationPanel';
 import { SessionSimulator } from './components/SessionSimulator';
 import { PerformanceAnalytics } from './components/PerformanceAnalytics';
-import { Shield, BarChart2, Radio, Terminal, Settings, UserCheck, AlertOctagon } from 'lucide-react';
+import { Shield, BarChart2, Radio, Terminal, Settings, UserCheck, AlertOctagon, Sun, Moon } from 'lucide-react';
 
 function App() {
   const [username, setUsername] = useState('alice_cortex');
@@ -23,6 +23,20 @@ function App() {
   const [sessionLogs, setSessionLogs] = useState<SessionLogEntry[]>([]);
   const [selectedModel, setSelectedModel] = useState('LogisticRegression');
   const [_generalError, setGeneralError] = useState<string | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+
+  // Synchronize theme with document body class
+  useEffect(() => {
+    if (theme === 'light') {
+      document.body.classList.add('light-theme');
+    } else {
+      document.body.classList.remove('light-theme');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   // Sync user profile state from API on load / username modification
   const syncUserProfile = async (targetUser: string) => {
@@ -196,9 +210,29 @@ function App() {
             </p>
           </div>
           
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <button 
+              className="btn btn-secondary" 
+              onClick={toggleTheme}
+              style={{
+                padding: '6px 12px',
+                fontSize: '0.8rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'var(--bg-tertiary)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--text-primary)',
+                fontWeight: 600,
+                borderRadius: '8px'
+              }}
+            >
+              {theme === 'dark' ? <Sun size={14} color="var(--brand-orange)" /> : <Moon size={14} color="#6366f1" />}
+              {theme === 'dark' ? 'Light Theme' : 'Dark Theme'}
+            </button>
+            
             <div className="badge badge-success" style={{ background: 'rgba(0, 229, 255, 0.05)', color: 'var(--brand-teal)', borderColor: 'rgba(0, 229, 255, 0.2)' }}>
-              Cortex XDR v8.4
+              Endpoint Agent v2.4
             </div>
             <div className="badge badge-success">
               DB Connected
