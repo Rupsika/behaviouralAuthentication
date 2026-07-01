@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import router as api_router
 
 app = FastAPI(
-    title="Cortex-Guard API",
+    title="BioVerify API",
     description="Zero-Trust Continuous Keystroke Behavioral Authentication Engine",
     version="1.0.0"
 )
@@ -25,7 +25,7 @@ app.include_router(api_router)
 def read_root():
     return {
         "status": "online",
-        "service": "Cortex-Guard Engine",
+        "service": "BioVerify Engine",
         "docs_url": "/docs",
         "description": "Zero-Trust continuous endpoint identity verification via typing biometrics."
     }

@@ -1,6 +1,6 @@
-# Cortex-Guard: Continuous Behavioral Monitoring for Zero-Trust Architectures
+# BioVerify: Continuous Behavioral Monitoring for Zero-Trust Architectures
 
-> **Research prototype exploring how enterprise security platforms can extend endpoint monitoring with continuous telemetry analysis — using production-quality engineering patterns.**
+> **Research prototype exploring how enterprise security platforms could extend endpoint monitoring with continuous telemetry analysis — using production-quality engineering patterns.**
 
 **Problem:** Today's security stack verifies identity at login but assumes trust indefinitely thereafter — leaving active sessions vulnerable to hijacking, credential theft, and insider threats. The gap between initial MFA and continuous monitoring can allow an attacker to dwell undetected for **hours to days**.
 

@@ -44,7 +44,7 @@ def generate_synthetic_user_samples(
 
 def run_simulation():
     print("=" * 60)
-    print("CORTEX-GUARD: TYPING DYNAMICS MODEL EVALUATION PIPELINE")
+    print("BIOVERIFY: TYPING DYNAMICS MODEL EVALUATION PIPELINE")
     print("=" * 60)
     
     # 1. Locate baseline CSV file

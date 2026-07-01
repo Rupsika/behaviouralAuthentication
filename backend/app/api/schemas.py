@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from app.features.extractor import KeystrokeEvent
 
 class EnrollRequest(BaseModel):
-    username: str = Field(..., example="alice_cortex")
+    username: str = Field(..., example="alice")
     events: List[KeystrokeEvent] = Field(..., description="Keystroke events captured during typing sample")
 
 class EnrollResponse(BaseModel):
@@ -13,7 +13,7 @@ class EnrollResponse(BaseModel):
     message: str
 
 class TrainRequest(BaseModel):
-    username: str = Field(..., example="alice_cortex")
+    username: str = Field(..., example="alice")
     model_type: Optional[str] = Field("LogisticRegression", description="LogisticRegression, SVM, or RandomForest")
 
 class TrainResponse(BaseModel):
@@ -26,7 +26,7 @@ class TrainResponse(BaseModel):
     thresholds: Dict[str, float] = Field(..., description="Balanced, high_security, and low_friction thresholds")
 
 class VerifyRequest(BaseModel):
-    username: str = Field(..., example="alice_cortex")
+    username: str = Field(..., example="alice")
     events: List[KeystrokeEvent] = Field(..., description="Keystroke events for single-shot verification")
 
 class VerifyResponse(BaseModel):
@@ -37,7 +37,7 @@ class VerifyResponse(BaseModel):
     applied_threshold: float = Field(..., description="Threshold value applied for classification")
 
 class ScoreRequest(BaseModel):
-    username: str = Field(..., example="alice_cortex")
+    username: str = Field(..., example="alice")
     events: List[KeystrokeEvent] = Field(..., description="Sliding window of raw keystroke events for continuous scoring")
 
 class ScoreResponse(BaseModel):
@@ -48,7 +48,7 @@ class ScoreResponse(BaseModel):
     applied_threshold: float
 
 class UpdateProfileRequest(BaseModel):
-    username: str = Field(..., example="alice_cortex")
+    username: str = Field(..., example="alice")
     profile: str = Field(..., description="Must be 'balanced', 'high_security', or 'low_friction'")
 
 class UserInfoResponse(BaseModel):

@@ -315,7 +315,7 @@ export const SessionSimulator: React.FC<SessionSimulatorProps> = ({
               <div>
                 <div style={{ fontWeight: 700, textTransform: 'uppercase', fontSize: '0.85rem', letterSpacing: '0.05em' }}>Threat: Session Anomalous</div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                  Typing dynamics mismatch. Cortex Agent triggers step-up MFA.
+                  Typing dynamics mismatch. BioVerify Agent triggers step-up MFA.
                 </div>
               </div>
             </div>

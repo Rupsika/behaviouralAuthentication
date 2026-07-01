@@ -8,7 +8,7 @@ import { PerformanceAnalytics } from './components/PerformanceAnalytics';
 import { Shield, BarChart2, Radio, Terminal, Settings, UserCheck, AlertOctagon, Sun, Moon } from 'lucide-react';
 
 function App() {
-  const [username, setUsername] = useState('alice_cortex');
+  const [username, setUsername] = useState('alice');
   const [activeTab, setActiveTab] = useState<'enroll' | 'verify' | 'session' | 'analytics'>('enroll');
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [modelType, setModelType] = useState('LogisticRegression');
@@ -115,7 +115,7 @@ function App() {
       <aside className="sidebar">
         <div className="brand-header">
           <Shield size={28} color="var(--brand-orange)" />
-          <h1 className="brand-logo">CORTEX<span>GUARD</span></h1>
+          <h1 className="brand-logo">Bio<span>Verify</span></h1>
         </div>
 
         <nav>
@@ -172,7 +172,7 @@ function App() {
               className="form-input" 
               defaultValue={username} 
               onBlur={handleUsernameChange}
-              placeholder="e.g. alice_cortex"
+              placeholder="e.g. alice"
               style={{ padding: '8px' }}
             />
           </div>
@@ -204,9 +204,9 @@ function App() {
           marginBottom: '32px'
         }}>
           <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Continuous Behavioral Biometrics</h2>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Continuous Behavioral Authentication</h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
-              Zero-Trust identity verification concepts for endpoint telemetry defense.
+              Real-time session verification using keystroke biometrics and zero-trust scoring
             </p>
           </div>
           
@@ -232,10 +232,10 @@ function App() {
             </button>
             
             <div className="badge badge-success" style={{ background: 'rgba(0, 229, 255, 0.05)', color: 'var(--brand-teal)', borderColor: 'rgba(0, 229, 255, 0.2)' }}>
-              Endpoint Agent v2.4
+              Telemetry Engine V8.4
             </div>
             <div className="badge badge-success">
-              DB Connected
+              Storage: Active
             </div>
           </div>
         </div>
@@ -273,7 +273,7 @@ function App() {
             <div className="card-title" style={{ justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Terminal size={18} color="var(--brand-orange)" />
-                Cortex continuous Telemetry Logs (Real-time)
+                Session Telemetry Logs
               </div>
               <button 
                 className="btn btn-secondary" 

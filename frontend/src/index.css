@@ -17,6 +17,21 @@
   --error: #ef4444;
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --card-border-glow: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  --input-bg: var(--bg-primary);
+}
+
+body.light-theme {
+  --bg-primary: #f8f9ff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f3f4ff;
+  --border-color: #e2e8f0;
+  --text-primary: #1e1b4b;
+  --text-secondary: #64748b;
+  --card-shadow: 0 4px 20px rgba(99, 102, 241, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --card-border-glow: linear-gradient(90deg, var(--brand-orange), var(--brand-teal), #6366f1);
+  --input-bg: #f9fafb;
 }
 
 * {
@@ -37,6 +52,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Scrollbar */
@@ -138,7 +154,8 @@ body {
   margin-bottom: 24px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card::before {
@@ -148,7 +165,7 @@ body {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  background: var(--card-border-glow);
 }
 
 .card-title {
@@ -203,13 +220,13 @@ body {
 .form-input {
   width: 100%;
   padding: 12px;
-  background-color: var(--bg-primary);
+  background-color: var(--input-bg);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 0.95rem;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.3s ease;
 }
 
 .form-input:focus {
@@ -222,7 +239,7 @@ body {
   width: 100%;
   min-height: 120px;
   padding: 16px;
-  background-color: var(--bg-primary);
+  background-color: var(--input-bg);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   color: var(--text-primary);
@@ -472,6 +489,7 @@ body {
   color: var(--text-secondary);
   font-weight: 600;
   border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .logs-table td {
@@ -495,6 +513,11 @@ body {
 }
 
 /* Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 @keyframes glow-red {
   0%, 100% { border-color: var(--border-color); box-shadow: none; }
   50% { border-color: var(--brand-red); box-shadow: 0 0 15px rgba(255, 51, 102, 0.25); }
@@ -503,3 +526,318 @@ body {
 .hijack-alert-glow {
   animation: glow-red 1.5s infinite;
 }
+
+/* ═══════════════════════════════════════════════
+   DYNAMIC THEMED — ML Analytics & Enrollment Panels
+   ═══════════════════════════════════════════════ */
+
+/* Light page wrapper layout shifting */
+.light-page {
+  border-radius: 16px;
+  padding: 28px;
+  min-height: 100%;
+  transition: all 0.3s ease;
+}
+
+body.light-theme .light-page {
+  background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 50%, #f3f4ff 100%);
+}
+
+body:not(.light-theme) .light-page {
+  background: transparent;
+}
+
+/* Light Cards */
+.light-card {
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  transition: all 0.3s ease;
+}
+
+.light-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--card-border-glow);
+}
+
+body.light-theme .light-card {
+  background: #ffffff;
+}
+
+/* Titles */
+.light-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.light-card p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* Gradient Stat Cards */
+.grad-stat-card {
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: var(--card-shadow);
+}
+
+.grad-stat-card .stat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.75);
+}
+
+.grad-stat-card .stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.grad-stat-card .stat-sub {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.65);
+}
+
+.grad-orange { background: linear-gradient(135deg, #ff5a00, #ff8c42); }
+.grad-teal   { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+.grad-indigo { background: linear-gradient(135deg, #6366f1, #818cf8); }
+.grad-green  { background: linear-gradient(135deg, #059669, #10b981); }
+.grad-red    { background: linear-gradient(135deg, #dc2626, #ef4444); }
+.grad-violet { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+
+/* Bubble badges */
+.light-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.light-badge-orange {
+  background: rgba(255, 90, 0, 0.1);
+  color: var(--brand-orange);
+  border: 1px solid rgba(255, 90, 0, 0.25);
+}
+
+.light-badge-teal {
+  background: rgba(6, 182, 212, 0.1);
+  color: var(--brand-teal);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+
+.light-badge-indigo {
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+/* Light inputs */
+.light-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.light-input:focus {
+  outline: none;
+  border-color: var(--brand-orange);
+  box-shadow: 0 0 0 3px rgba(255, 90, 0, 0.1);
+}
+
+.light-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Key capture area textareas */
+.light-capture-area {
+  width: 100%;
+  min-height: 130px;
+  padding: 16px;
+  background: var(--input-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.light-capture-area:focus {
+  outline: none;
+  border-color: var(--brand-orange);
+  border-style: solid;
+  box-shadow: 0 0 0 3px rgba(255, 90, 0, 0.08);
+}
+
+.light-prompt-box {
+  padding: 14px 18px;
+  border-left: 4px solid var(--brand-orange);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  margin-bottom: 16px;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+body.light-theme .light-prompt-box {
+  background: linear-gradient(135deg, #fff7ed, #fef3c7);
+  color: #92400e;
+}
+
+body:not(.light-theme) .light-prompt-box {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Progress dots for enrollment */
+.progress-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.progress-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.progress-dot-done {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+.progress-dot-active {
+  background: linear-gradient(135deg, var(--brand-orange), #ff8c42);
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 90, 0, 0.4);
+  animation: pulse-dot 1.5s infinite;
+}
+
+.progress-dot-empty {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 2px dashed var(--border-color);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Buttons */
+.btn-light-primary {
+  background: linear-gradient(135deg, var(--brand-orange), #ff8c42);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(255, 90, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-light-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 90, 0, 0.4);
+}
+
+.btn-light-primary:disabled {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+.btn-light-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.btn-light-secondary:hover {
+  background: var(--bg-tertiary);
+}
+
+.btn-light-teal {
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-light-teal:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(6, 182, 212, 0.45);
+}
+
+.light-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 20px 0;
+}
+
+.light-section-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+

@@ -72,7 +72,7 @@ export const VerificationPanel: React.FC<VerificationPanelProps> = ({ username }
     <div className="card">
       <div className="card-title">
         <Key size={20} color="var(--brand-teal)" />
-        Cortex-Guard: Single-Shot Verification
+        BioVerify: Single-Shot Verification
       </div>
 
       <div style={{ marginBottom: '16px' }}>
@@ -178,7 +178,7 @@ export const VerificationPanel: React.FC<VerificationPanelProps> = ({ username }
             {result.is_genuine ? (
               <span>The input typing profile matches your behavioral template. The confidence level is above the required score for the <strong>{result.active_profile}</strong> profile.</span>
             ) : (
-              <span><strong>Warning:</strong> The keystroke signature mismatch is significant (confidence score fell below threshold). In a live enterprise scenario, Cortex-XDR would flag this endpoint and initiate a secondary Multi-Factor Authentication (MFA) challenge.</span>
+              <span><strong>Warning:</strong> The keystroke signature mismatch is significant (confidence score fell below threshold). In a live enterprise scenario, the monitoring agent would flag this endpoint and initiate a secondary Multi-Factor Authentication (MFA) challenge.</span>
             )}
           </div>
         </div>
