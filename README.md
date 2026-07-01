@@ -13,6 +13,18 @@
 
 ---
 
+## ✨ Key Features & Interactive Capabilities
+
+- **Interactive Setup Selector:** Choose between three enrollment benchmark sentences to record your unique typing dynamics.
+- **Flexible Sample Size (5–15):** Capture between 5 and 15 typing samples to train the machine learning models. More samples enable higher accuracy.
+- **Global Theme Engine:** Switch cleanly between a premium **Dark Cyberpunk Mode** and a clean **Light Corporate Mode** with a toggle on the header.
+- **Continuous Notepad Simulator:** Type freely to generate live telemetry streams. The backend scores your behavior dynamically using a sliding window.
+- **Single-Shot Verification:** Test your trained profile signature in a separate validation prompt.
+- **Real-Time Telemetry Log:** View `keydown` (key pressed) and `keyup` (key released) timestamps at the millisecond level directly on the UI dashboard.
+- **Copy-Paste Defense:** Intercepts and blocks paste events in text areas to prevent session bypass attacks.
+
+---
+
 ## 🏗️ Architecture & Telemetry Pipeline
 
 ```mermaid
@@ -30,11 +42,11 @@ graph TD
 
 The feature extraction pipeline processes keystroke events in a single linear pass O(n), designed for low-latency edge-agent compatibility (Cortex XDR lightweight agent model):
 
-- **Dwell Time (DT)**: Duration a key is held down (`KeyUp − KeyDown`). Reflects neuromuscular individual signature.
+- **Dwell Time (DT)**: Duration a key is held down (`KeyUp − KeyDown`). Reflects physical neuromuscular response.
 - **Flight Time (FT)**: Interval between consecutive keystrokes (`KeyDown_current − KeyUp_previous`). Captures cognitive typing rhythm.
-- **Typing Speed**: Completed keypresses per second — weighted rolling window.
-- **Backspace Rate**: Ratio of mistake corrections (`Backspace_count / Total_keys`) capturing per-user accuracy profile.
-- **Pause Frequency**: Count of inter-key gaps exceeding 1000ms — reveals thought patterns and fatigue.
+- **Typing Speed**: Completed keypresses per second.
+- **Backspace Rate**: Ratio of mistake corrections (`Backspace_count / Total_keys`) capturing typing accuracy profile.
+- **Pause Frequency**: Count of inter-key gaps exceeding 1000ms — reveals hesitations.
 
 ---
 
@@ -171,8 +183,6 @@ This is a **research prototype**, not a production security tool. Honest assessm
 | SQLite not suited for high-concurrency | Swap to PostgreSQL via Repository pattern (zero API changes required) |
 | No hardware security module (HSM) | Enroll biometric templates with HSM-backed encryption in production |
 | Prototype dataset (25 users) | Validate on CMU Keystroke dataset (30,000+ samples) for production readiness |
-
-The architecture is explicitly designed to plug in additional telemetry sensors — the `FeatureExtractor` is modular and the Strategy pattern means new classifiers can be added without touching the API.
 
 ---
 
